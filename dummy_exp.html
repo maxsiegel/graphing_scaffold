@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-custom-graph-grow.js"></script>
+    <script src="jspsych/plugin-custom-graph-rise.js"></script>
+    <script src="jspsych/plugin-custom-graph-click.js"></script>
+    <script src="jspsych/plugin-graph-scaffold.js"></script>
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+    const jsPsych = initJsPsych();
+    const debug = true;
+    const alien_tree = {
+      type: jsPsychGraphScaffold,
+      static_image: "img/alien_tree_graph_tree.png",
+      dynamic_image: "img/alien_tree_single_tree.png",
+      audio: "mp4/tree.m4a",
+      prompt: "<p>How tall is the tree on day 5?</p>",
+      response_allowed_while_playing: debug,
+      input_type: "grow",
+      dynamic_width: 173,
+      dynamic_height: 270,
+    };
+
+    const alien_match = {
+      type: jsPsychGraphScaffold,
+      static_image: "img/alien_tree_match.png",
+      dynamic_image: "img/alien_tree_dot.png",
+      audio: "mp4/tree.m4a",
+      prompt: "<p>Match the height of the tree!</p>",
+      response_allowed_while_playing: debug,
+      input_type: "click",
+    };
+
+    const alien_dots = {
+      type: jsPsychGraphScaffold,
+      static_image: "img/alien_tree_graph_dot.png",
+      dynamic_image: "img/alien_tree_dot.png",
+      audio: "mp4/tree.m4a",
+      prompt: "<p>How tall is the tree on day 5?</p>",
+      response_allowed_while_playing: debug,
+      input_type: "rise",
+    };
+
+    const alien_trials = [alien_tree, alien_match, alien_dots];
+    jsPsych.run(alien_trials);
+
+    const trees2 = {
+      type: jsPsychGraphScaffold,
+      static_image: "img/tree_graph.png",
+      dynamic_image: "img/single_tree.png",
+      audio: "mp4/tree.m4a",
+      prompt: "<p>New Plugin!</p>",
+      response_allowed_while_playing: debug,
+    };
+
+    const trees = {
+      type: jsPsychCustomGraphGrow,
+      graph_image: "tree_graph.png",
+      bar_image: "single_tree.png",
+      audio: "tree.m4a",
+      prompt: "<p>Growing tree</p>",
+      response_allowed_while_playing: debug,
+    }; 
+
+    const bars = {
+      type: jsPsychCustomGraphRise,
+      graph_image: "bar_graph.png",
+      bar_image: "single_bar.png",
+      audio: "tree.m4a",
+      prompt: "<p>Rising bar</p>",
+      response_allowed_while_playing: debug,
+    };
+
+    const dots = {
+      type: jsPsychCustomGraphClick,
+      graph_image: "bar_graph.png", // TODO: change this once off the plane
+      bar_image: "single_dot_temp.jpeg",
+      audio: "tree.m4a",
+      prompt: "<p>Clicking dot</p>",
+      response_allowed_while_playing: debug,
+    };
+
+    // jsPsych.run([trees2]);
+
+  </script>
+</html>
