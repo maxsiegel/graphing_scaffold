@@ -1,9 +1,264 @@
 <!DOCTYPE html>
 <html>
-<body>
+  <head>
+    <title>My experiment</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-html-button-response.js"></script>
+    <script src="jspsych/plugin-image-button-response.js"></script>
+    <script src="jspsych/plugin-graph-scaffold.js"></script>
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+    const jsPsych = initJsPsych();
+    const debug = true;
+    const intro = [
+      {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: "<h1>Let's observe some trees!</h1>",
+        choices: ['next'],
+        prompt: "<p>Placeholder intro slide</p>"
+      }
+    ];
+    const regular_tree_tree = [
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/regular_tree_match_tree.png",
+        dynamic_image: "img/regular_tree_single_tree.png",
+        audio: "mp3/tree_match.mp3",
+        prompt: "<p>Match the height of the tree!</p>",
+        input_requried: !debug,
+        response_allowed_while_playing: debug,
+        input_type: "grow",
+      },
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/regular_tree_graph_tree.png",
+        dynamic_image: "img/regular_tree_single_tree.png",
+        audio: "mp3/tree_day_5.mp3",
+        prompt: "<p>How tall is the tree on day 5?</p>",
+        input_requried: !debug,
+        response_allowed_while_playing: debug,
+        input_type: "grow",
+      }
+    ];
+    const regular_tree_bar = [
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/regular_tree_match_bar.png",
+        dynamic_image: "img/regular_tree_single_bar.png",
+        audio: "mp3/regular_tree_match_bar.mp3",
+        prompt: "<p>Match the height of the tree!</p>",
+        input_requried: !debug,
+        response_allowed_while_playing: debug,
+        input_type: "rise",
+        dynamic_height: 300,
+      },
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/regular_tree_graph_bar.png",
+        dynamic_image: "img/regular_tree_single_bar.png",
+        audio: "mp3/tree_day_5.mp3",
+        prompt: "<p>How tall is the tree on day 5?</p>",
+        input_requried: !debug,
+        response_allowed_while_playing: debug,
+        input_type: "rise",
+        dynamic_height: 300,
+      }
+    ];
+    const regular_tree_dot = [
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/regular_tree_match_dot.png",
+        dynamic_image: "img/regular_tree_single_dot.png",
+        audio: "mp3/regular_tree_match_dot.mp3",
+        prompt: "<p>Match the height of the tree!</p>",
+        input_requried: !debug,
+        response_allowed_while_playing: debug,
+        input_type: "click",
+        initial_height: 0,
+      },
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/regular_tree_graph_dot.png",
+        dynamic_image: "img/regular_tree_single_dot.png",
+        audio: "mp3/tree_day_5.mp3",
+        prompt: "<p>How tall is the tree on day 5?</p>",
+        input_requried: !debug,
+        response_allowed_while_playing: debug,
+        input_type: "click",
+        initial_height: 0,
+      }
+    ];
+    const regular_tree_trials = [regular_tree_tree, regular_tree_bar, regular_tree_dot];
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
+    const alien_tree = [{
+      type: jsPsychGraphScaffold,
+      static_image: "img/alien_tree_graph_tree.png",
+      dynamic_image: "img/alien_tree_single_tree.png",
+      audio: "mp3/tree_day_5.mp3",
+      prompt: "<p>How tall is the tree on day 5?</p>",
+      input_requried: !debug,
+      response_allowed_while_playing: debug,
+      input_type: "grow",
+    }];
 
-</body>
+    const alien_dots = [
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/alien_tree_match.png",
+        dynamic_image: "img/alien_tree_single_dot.png",
+        audio: "mp3/alien_tree_match_dot.mp3",
+        prompt: "<p>Match the height of the tree!</p>",
+        input_requried: !debug,
+        response_allowed_while_playing: debug,
+        input_type: "click",
+        initial_height: 0,
+      },
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/alien_tree_graph_dot.png",
+        dynamic_image: "img/alien_tree_single_dot.png",
+        audio: "mp3/tree_day_5.mp3",
+        prompt: "<p>How tall is the tree on day 5?</p>",
+        response_allowed_while_playing: debug,
+        input_requried: !debug,
+        input_type: "click",
+        initial_height: 0,
+      }
+    ];
+
+    const alien_2 = [
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/alien_tree_2_graph.png",
+        dynamic_image: "img/alien_tree_2_single_dot.png",
+        audio: "mp3/tree_day_11.mp3",
+        prompt: "<p>How tall is the tree on day 11?</p>",
+        response_allowed_while_playing: debug,
+        input_requried: !debug,
+        input_type: "click",
+        initial_height: 0,
+        input_width: 125,
+      }
+    ];
+    const alien_trials = [alien_tree, alien_dots, alien_2];
+
+    const fruit_bar = [
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/fruits_match_bar.png",
+        dynamic_image: "img/fruits_single_bar.png",
+        audio: "mp3/fruits_match.mp3",
+        prompt: "<p>Match the number of fruits!</p>",
+        response_allowed_while_playing: debug,
+        // input_requried: !debug,
+        input_type: "rise",
+        input_steps: 6,
+        dynamic_height: 300,
+      },
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/fruits_graph_bar_1.png",
+        dynamic_image: "img/fruits_single_bar.png",
+        audio: "mp3/fruits_day_4.mp3",
+        prompt: "<p>How many fruits were picked on day 4?</p>",
+        response_allowed_while_playing: debug,
+        input_requried: !debug,
+        input_type: "rise",
+        input_steps: 6,
+        input_margin_right: 180,
+        dynamic_height: 300,
+      },
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/fruits_graph_bar_2.png",
+        dynamic_image: "img/fruits_single_bar.png",
+        audio: "mp3/fruits_day_5.mp3",
+        prompt: "<p>How many fruits were picked on day 5?</p>",
+        response_allowed_while_playing: debug,
+        input_requried: !debug,
+        input_type: "rise",
+        input_steps: 6,
+        dynamic_height: 300,
+      }
+    ];
+    const fruit_dot = [
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/fruits_match_dot.png",
+        dynamic_image: "img/fruits_single_dot.png",
+        audio: "mp3/fruits_match.mp3",
+        prompt: "<p>Match the number of fruits!</p>",
+        response_allowed_while_playing: debug,
+        input_requried: !debug,
+        input_type: "click",
+        initial_height: 0,
+      },
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/fruits_graph_dot_1.png",
+        dynamic_image: "img/fruits_single_dot.png",
+        audio: "mp3/fruits_day_4.mp3",
+        prompt: "<p>How many fruits were picked on day 4?</p>",
+        response_allowed_while_playing: debug,
+        input_requried: !debug,
+        input_type: "click",
+        initial_height: 0,
+        input_margin_right: 180,
+      },
+      {
+        type: jsPsychGraphScaffold,
+        static_image: "img/fruits_graph_dot_2.png",
+        dynamic_image: "img/fruits_single_dot.png",
+        audio: "mp3/fruits_day_5.mp3",
+        prompt: "<p>How many fruits were picked on day 5?</p>",
+        response_allowed_while_playing: debug,
+        input_requried: !debug,
+        input_type: "click",
+        initial_height: 0,
+      }
+    ];
+    const fruit_trials = [fruit_bar, fruit_dot];
+
+    const toy = [
+      {
+        type: jsPsychImageButtonResponse,
+        stimulus: 'img/toy_graph.png',
+        choices: ['next'],
+        prompt: "<p>add question here</p>"
+      }
+    ];
+
+    const icecream = [
+      {
+        type: jsPsychImageButtonResponse,
+        stimulus: 'img/ice_cream_graph.png',
+        choices: ['next'],
+        prompt: "<p>add question here</p>"
+      }
+    ];
+
+    const outro = [
+      {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: "<h1>Thank you for helping us look at some trees (and other things)!</h1>",
+        choices: ['next'],
+        prompt: "<p>Placeholder exit slide</p>"
+      }
+    ];
+
+    const all_trials = [
+      intro,
+      // regular_tree_trials, 
+      // alien_trials, 
+      fruit_trials, 
+      // toy, 
+      // icecream,
+      outro,
+    ];
+    const trials = all_trials.flat();
+    jsPsych.run(trials);
+
+  </script>
 </html>
