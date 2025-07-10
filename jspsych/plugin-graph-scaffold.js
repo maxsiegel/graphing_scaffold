@@ -282,9 +282,10 @@ var jsPsychGraphScaffold = (function (jspsych) {
       set_y(old_y, 0, 0);
 
       // require some form of input
-      
       const next_button = document.getElementById("jspsych-resize-btn");
-      next_button.setAttribute("disabled", "disabled");
+      if (trial.input_required) {
+        next_button.setAttribute("disabled", "disabled");
+      }
       
       const mousedownevent = (e) => {
         e.preventDefault();
