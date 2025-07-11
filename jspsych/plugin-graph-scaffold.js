@@ -1,3 +1,5 @@
+import html2canvas from 'html2canvas';
+
 var jsPsychGraphScaffold = (function (jspsych) {
   'use strict';
 
@@ -161,6 +163,12 @@ var jsPsychGraphScaffold = (function (jspsych) {
        * Used to reconstruct what the user input looked like for data visualization.
        */
       html: {
+        type: jspsych.ParameterType.STRING,
+      },
+      /** Screenshot of the displayed image at the time of submission as a data url.
+       * Used to reconstruct what the user input looked like for data visualization.
+       */
+      image: {
         type: jspsych.ParameterType.STRING,
       }
     },
@@ -338,11 +346,16 @@ var jsPsychGraphScaffold = (function (jspsych) {
         document.removeEventListener("touchend", mouseupevent);
         
         // customize trial data here
+        let data_url;
+        html2canvas(display_element.querySelector("#jspsych-graph-scaffold-container")).then(canvas => {
+          data_url = canvas.toDataURL('image/png');
+        });
         const final_height_px = get_y();
         var trial_data = {
           final_height_px: final_height_px,
           final_height_norm: final_height_px / trial.input_height,
-          html: display_element.innerHTML
+          html: display_element.innerHTML,
+          image: data_url
         };
         this.trial_complete(trial_data);
       };
