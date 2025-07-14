@@ -357,9 +357,9 @@ var jsPsychGraphScaffold = (function (jspsych) {
         const container = display_element.querySelector("#jspsych-graph-scaffold-container");
         html2canvas(container, {
           useCORS: true,
+          logging: false,
         }).then(canvas => {
           data_url = canvas.toDataURL('image/png');
-          console.log(data_url);
           const final_height_px = get_y();
           var trial_data = {
             final_height_px: final_height_px,
