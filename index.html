@@ -11,6 +11,9 @@
   </head>
   <body></body>
   <script>
+    const searchParams = new URLSearchParams(window.location.search);
+    console.log(searchParams.get('c'));
+    console.log(searchParams.get('r'));
     const jsPsych = initJsPsych();
     const debug = true;
     const BASEDIR = "https://raw.githubusercontent.com/vivianhan404/graphing_scaffold/main/"
@@ -263,6 +266,5 @@
     ];
     const trials = all_trials.flat();
     jsPsych.run(trials);
-
   </script>
 </html>
