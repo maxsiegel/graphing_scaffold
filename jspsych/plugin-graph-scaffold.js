@@ -1,5 +1,3 @@
-import html2canvas from 'html2canvas';
-
 var jsPsychGraphScaffold = (function (jspsych) {
   'use strict';
 
@@ -209,6 +207,7 @@ var jsPsychGraphScaffold = (function (jspsych) {
             id="static-image" 
             src="${trial.static_image}"
             height="${trial.static_height}"
+            crossorigin="anonymous"
           />
           <div 
             id="input-space"
@@ -229,10 +228,18 @@ var jsPsychGraphScaffold = (function (jspsych) {
             <div 
               id="dynamic-image" 
               style="
-                content: url('${trial.dynamic_image}');
                 height: ${trial.dynamic_height}px;
               " 
-            ></div>
+            >
+              <img
+                src="${trial.dynamic_image}"
+                style="
+                  max-height:100%;
+                  width: auto;
+                "
+                crossorigin="anonymous"
+              />
+            </div>
           </div>
         </div>
       `;
@@ -346,10 +353,16 @@ var jsPsychGraphScaffold = (function (jspsych) {
         document.removeEventListener("touchend", mouseupevent);
         
         // customize trial data here
-        let data_url;
-        html2canvas(display_element.querySelector("#jspsych-graph-scaffold-container")).then(canvas => {
+        let data_url="unsupported";
+        const container = display_element.querySelector("#jspsych-graph-scaffold-container");
+        html2canvas(container, {
+          // foreignObjectRendering: true,
+          useCORS: true,
+          logging: true,
+        }).then(canvas => {
           data_url = canvas.toDataURL('image/png');
         });
+        console.log(data_url);
         const final_height_px = get_y();
         var trial_data = {
           final_height_px: final_height_px,
