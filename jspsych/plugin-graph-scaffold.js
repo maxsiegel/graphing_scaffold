@@ -356,21 +356,19 @@ var jsPsychGraphScaffold = (function (jspsych) {
         let data_url="unsupported";
         const container = display_element.querySelector("#jspsych-graph-scaffold-container");
         html2canvas(container, {
-          // foreignObjectRendering: true,
           useCORS: true,
-          logging: true,
         }).then(canvas => {
           data_url = canvas.toDataURL('image/png');
+          console.log(data_url);
+          const final_height_px = get_y();
+          var trial_data = {
+            final_height_px: final_height_px,
+            final_height_norm: final_height_px / trial.input_height,
+            html: display_element.innerHTML,
+            image: data_url
+          };
+          this.trial_complete(trial_data);
         });
-        console.log(data_url);
-        const final_height_px = get_y();
-        var trial_data = {
-          final_height_px: final_height_px,
-          final_height_norm: final_height_px / trial.input_height,
-          html: display_element.innerHTML,
-          image: data_url
-        };
-        this.trial_complete(trial_data);
       };
 
       next_button.addEventListener("click", () => {
