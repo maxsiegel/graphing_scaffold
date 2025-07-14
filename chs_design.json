@@ -1,0 +1,144 @@
+{
+  "frames": {
+    "video-config": {
+      "kind": "exp-video-config",
+      "troubleshootingIntro": "If you're having any trouble getting your webcam set up, please feel free to email Vivian Han at vivhan@mit.edu and we'd be glad to help you out!"
+    },
+    "video-consent": {
+      "kind": "exp-lookit-video-consent",
+      "template": "consent_005",
+      "PIName": "Laura Schulz",
+      "institution": "Massachusetts Institute of Technology",
+      "PIContact": "the ECCL lab at vivhan@mit.edu",
+      "purpose": "TODO",
+      "procedures": "TODO",
+      "risk_statement": "There are no expected risks if you participate in the study.",
+      "payment": "After you finish the study, we will email you a $5 Amazon gift card (via a code that can be entered online) within five days to thank you for your time. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.",
+      "include_databrary": true,
+      "research_rights_statement": "You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Committee On the Use of Humans as Experimental Subjects (COUHES), Massachusetts of Technology, 77 Massachusetts Avenue Cambridge, MA 02139 (contact: couhes@mit.edu)"
+    },
+    "video-quality": {
+      "kind": "exp-video-config-quality",
+      "title": "Webcam setup for the study",
+      "introText": "Please check each of the following to ensure we're able to use your video:",
+      "requireItemConfirmation": true,
+      "completedItemText": "Did it!",
+      "instructionBlocks": [
+        {
+          "text": "<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is pointing to the left or right!",
+          "image": {
+            "src": "https://s3.amazonaws.com/lookitcontents/website/centering.png",
+            "alt": "Example images of using centered external webcam on monitor or built-in webcam on laptop."
+          }
+        },
+        {
+          "text": "<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)",
+          "image": {
+            "src": "https://s3.amazonaws.com/lookitcontents/website/monitors.png",
+            "alt": "Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen."
+          }
+        },
+        {
+          "text": "Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.",
+          "image": {
+            "src": "https://s3.amazonaws.com/lookitcontents/website/lighting.png",
+            "alt": "Example images showing good lighting, room too dark, and backlit scene where eyes are not visible."
+          }
+        },
+        {
+          "text": "If it's practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn't practical for you, don't worry about it--just check the box!)",
+          "image": {
+            "src": "https://s3.amazonaws.com/lookitcontents/website/distractions.png",
+            "alt": "Example images showing a child and puppy next to the computer, versus a computer just on its own."
+          }
+        }
+      ],
+      "requireTestVideo": false,
+      "showRecordMenu": false,
+      "recordingInstructionText": "You should be able to see your camera view above."
+    },
+    "instructions": {
+      "kind": "exp-lookit-instructions",
+      "blocks": [
+        {
+          "text": "Please try playing this sample audio to make sure you'll be able to hear the story.",
+          "title": "Adjust your speakers",
+          "mediaBlock": {
+            "text": "You should hear 'Ready to go?'",
+            "isVideo": false,
+            "sources": [
+              {
+                "src": "https://s3.amazonaws.com/lookitcontents/exp-physics-final/audio/ready.mp3",
+                "type": "audio/mp3"
+              },
+              {
+                "src": "https://s3.amazonaws.com/lookitcontents/exp-physics-final/audio/ready.ogg",
+                "type": "audio/ogg"
+              }
+            ],
+            "mustPlay": true,
+            "warningText": "Please try playing the sample audio."
+          }
+        }
+      ],
+      "showWebcam": true,
+      "webcamBlocks": [
+        {
+          "title": "Make sure we can see you",
+          "listblocks": [
+            {
+              "text": "Take a look at your webcam view above. Get comfy, and adjust your own position or the computer as needed so both you and your child are visible."
+            },
+            {
+              "text": "This isn't a Skype call - no one in the lab can see you - but the recorded video of your participation will be sent to the lab to help with data analysis. It's helpful for us to be able to see if your child was pointing or looking confused, for example."
+            }
+          ]
+        }
+      ],
+      "nextButtonText": "Next"
+    },
+    "embedded-survey": {
+      "kind": "exp-lookit-iframe",
+      "iframeSrc": "https://vivianhan404.github.io/graphing_scaffold/",
+      "iframeHeight": "500px",
+      "iframeWidth": "100%",
+      "instructionText": "Please complete the survey above. When finished, click the green 'Next' button to continue with the experiment.",
+      "optionalExternalLink": true
+    },
+    "embedded-survey-with-id": {
+      "kind": "exp-lookit-iframe",
+      "iframeHeight": "600px",
+      "iframeWidth": "100%",
+      "instructionText": "Please complete the survey above. When finished, click the green 'Next' button to continue with the experiment.",
+      "optionalExternalLink": true,
+      "generateProperties": "function(expData, sequence, child, pastSessions, conditions) { return { 'iframeSrc': `https://vivianhan404.github.io/graphing_scaffold?c=${child.get('id')}&r=${pastSessions[0].get('id')}` }; }"
+    },
+    "exit-survey": {
+      "kind": "exp-lookit-exit-survey",
+      "debriefing": {
+        "blocks": [
+          {
+            "text": "Thank you for participating in this study! TODO"
+          },
+          {
+            "text": "Thank you again for participating in this study. Developmental research would be impossible without parental support. Please note that you have the right to withdraw your data from the study if you wish. We'll be emailing you a $5 Amazon gift card. This should arrive in your inbox within the next week after we confirm that a child is with you in the video recording and check that your child is in the age range for this study. If you don't hear from us by then, feel free to reach out! Please don't hesitate to contact us at vivhan@mit.edu if you have any additional questions or feedback!"
+          }
+        ]
+      },
+      "showDatabraryOptions": false,
+      "includeWithdrawalExample": true,
+      "privateLevelOnly": true
+    }
+  },
+  "final_sequence": [
+    "video-config",
+    "video-quality",
+    "video-consent",
+    "instructions",
+    "embedded-survey",
+    "exit-survey"
+  ],
+  "sequence": [
+    "embedded-survey-with-id"
+  ]
+}
