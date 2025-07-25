@@ -6,17 +6,22 @@
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugin-html-button-response.js"></script>
     <script src="jspsych/plugin-image-button-response.js"></script>
+    <script src="jspsych/plugin-audio-button-response.js"></script>
+    <script src="jspsych/plugin-video-button-response.js"></script>
     <script src="jspsych/plugin-graph-scaffold.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
   </head>
   <body></body>
   <script>
     const searchParams = new URLSearchParams(window.location.search);
-    console.log(searchParams.get('c'));
-    console.log(searchParams.get('r'));
+    const FILE_NAME = searchParams.get('c') + "-" + searchParams.get('r');
+    console.log('c', searchParams.get('c'));
+    console.log('r', searchParams.get('r'));
+
     const jsPsych = initJsPsych();
     const debug = true;
-    const BASEDIR = "https://raw.githubusercontent.com/vivianhan404/graphing_scaffold/main/"
+    const BASEDIR = "https://vivhan.scripts.mit.edu/graphing_scaffold/";
     const intro = [
       {
         type: jsPsychHtmlButtonResponse,
@@ -226,14 +231,72 @@
     ];
     const fruit_trials = [fruit_bar, fruit_dot];
 
+    // const toy = [
+    //   {
+    //     type: jsPsychImageButtonResponse,
+    //     stimulus: BASEDIR + "img/toy_graph.png",
+    //     stimulus_height: 365,
+    //     choices: ['next'],
+    //     prompt: "<p>Can you tell me when these toys sold the most? Can you tell me when they sold the least? Any idea why?</p>"
+    //   }
+    // ];
+
+    const make_clickable_columns = (choice, choice_index) => {
+      const dimensions = `height: 310px; width: 165px;`;
+      // let position = `z-index: 10; margin-top: -380px;`;
+      let position = `z-index: 10;`;
+      if (choice_index === 0) {
+        position += `margin-left: 55px;`;
+      }
+      const background = `background-color: transparent;`;
+      return `<button class="jspsych-btn" key=${choice_index} style="${dimensions} ${position} ${background}"/>`;
+    };
+    const background_image_style = `style="height: 365px; margin-top: -315px"`;
+
     const toy = [
       {
-        type: jsPsychImageButtonResponse,
-        stimulus: BASEDIR + "img/toy_graph.png",
+        type: jsPsychVideoButtonResponse,
+        stimulus: [BASEDIR + "mp4/toy_intro.mp4"],
+        height: 400,
+        trial_ends_after_video: true,
+        choices: ["skip"],
+      },
+      {
+        type: jsPsychAudioButtonResponse,
+        stimulus: BASEDIR + "mp3/toys_least_click.mp3",
         stimulus_height: 365,
-        choices: ['next'],
-        prompt: "<p>Can you tell me when these toys sold the most? Can you tell me when they sold the least? Any idea why?</p>"
-      }
+        choices: ['oct', 'nov', 'dec', 'jan', 'feb'],
+        button_html: make_clickable_columns,
+        button_layout: "flex",
+        prompt: `<div>
+          <img src=${BASEDIR + "img/toy_graph.png"} ${background_image_style}/>
+          <p>What month did the least toys get sold?</p></div>`,
+      },
+      {
+        type: jsPsychAudioButtonResponse,
+        stimulus: BASEDIR + "mp3/toys_least_why.mp3",
+        prompt: `<div>
+          <img src=${BASEDIR + "img/toy_graph.png"} style="height: 365px;"/>
+          <p>Why do you think the least number of toys sold that month?</p></div>`,
+      },
+      {
+        type: jsPsychAudioButtonResponse,
+        stimulus: BASEDIR + "mp3/toys_most_click.mp3",
+        stimulus_height: 365,
+        choices: ['oct', 'nov', 'dec', 'jan', 'feb'],
+        button_html: make_clickable_columns,
+        button_layout: "flex",
+        prompt: `<div>
+          <img src=${BASEDIR + "img/toy_graph.png"} ${background_image_style}/>
+          <p>What month did the least toys get sold?</p></div>`,
+      },
+      {
+        type: jsPsychAudioButtonResponse,
+        stimulus: BASEDIR + "mp3/toys_most_why.mp3",
+        prompt: `<div>
+          <img src=${BASEDIR + "img/toy_graph.png"} style="height: 365px;"/>
+          <p>Why do you think the least number of toys sold that month?</p></div>`,
+      },
     ];
 
     const icecream = [
@@ -251,20 +314,43 @@
         type: jsPsychHtmlButtonResponse,
         stimulus: "<h1>Thank you for helping us look at some trees (and other things)!</h1>",
         choices: ['next'],
-        prompt: "<p>Placeholder exit slide</p>"
+        prompt: "<p>Placeholder exit slide</p>",
+        on_start: function() {
+         // saveData(FILE_NAME, jsPsych.data.get().csv());
+          write_data_to_server(FILE_NAME, jsPsych.data.get().json());       
+        }
       }
     ];
 
     const all_trials = [
       intro,
-      regular_tree_trials, 
-      alien_trials, 
-      fruit_trials, 
+      // regular_tree_trials, 
+      // alien_trials, 
+      // fruit_trials, 
       toy, 
       icecream,
       outro,
     ];
     const trials = all_trials.flat();
-    jsPsych.run(trials);
+    // jsPsych.run(trials);
+    jsPsych.run(intro.concat(toy));
+
+    function write_data_to_server(filename, filedata) {
+      /*
+      This function sends a data packet to the specified URL as a POST request.
+      The specified URL is for a PHP script that writes the POST request's
+      contents (`filename` and `filedata`) to a file on the server.
+      */
+      const url_write_data_php = BASEDIR + "write_data.php";
+      jQuery.ajax({
+        type: 'post',
+        cache: false,
+        url: url_write_data_php,
+        data: {
+          filename: "data/" + filename + ".json",
+          filedata: filedata,
+        },
+      });
+    }
   </script>
 </html>

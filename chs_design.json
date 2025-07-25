@@ -111,7 +111,7 @@
       "iframeWidth": "100%",
       "instructionText": "Please complete the survey above. When finished, click the green 'Next' button to continue with the experiment.",
       "optionalExternalLink": true,
-      "generateProperties": "function(expData, sequence, child, pastSessions, conditions) { return { 'iframeSrc': `https://vivianhan404.github.io/graphing_scaffold?c=${child.get('id')}&r=${pastSessions[0].get('id')}` }; }"
+      "generateProperties": "function(expData, sequence, child, pastSessions, conditions) { return { 'iframeSrc': `https://vivhan.scripts.mit.edu/graphing_scaffold/?c=${child.get('id')}&r=${pastSessions.filter((session)=>session.get('completedConsentFrame')).length}` }; }"
     },
     "exit-survey": {
       "kind": "exp-lookit-exit-survey",

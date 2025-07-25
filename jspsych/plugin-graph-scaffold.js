@@ -298,8 +298,14 @@ var jsPsychGraphScaffold = (function (jspsych) {
 
       // require some form of input
       const next_button = document.getElementById("jspsych-resize-btn");
-      if (trial.input_required) {
-        next_button.setAttribute("disabled", "disabled");
+      const enable_button = () => {
+        next_button.disabled = false;
+        // next_button.removeAttribute("disabled");
+      }
+	    if (trial.input_required) {
+        console.log("input required");
+        next_button.disabled = true;
+        // next_button.setAttribute("disabled", "disabled");
       }
       
       const mousedownevent = (e) => {
@@ -325,10 +331,7 @@ var jsPsychGraphScaffold = (function (jspsych) {
 
       // play the audio (default)
       this.audio = await this.jsPsych.pluginAPI.getAudioPlayer(trial.audio);
-      const enable_button = () => {
-        next_button.removeAttribute("disabled");
-      }
-	    if (!trial.response_allowed_while_playing) {
+      if (!trial.response_allowed_while_playing) {
         next_button.setAttribute("disabled", "disabled");
 	      this.audio.addEventListener("ended", enable_button);
 	    }
