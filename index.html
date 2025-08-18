@@ -111,6 +111,7 @@
       input_required: !debug,
       response_allowed_while_playing: debug,
       input_type: "grow",
+      initial_height: 280
     }];
 
     const alien_dots = [
@@ -333,7 +334,8 @@
     ];
     const trials = all_trials.flat();
     // jsPsych.run(trials);
-    jsPsych.run(intro.concat(toy));
+    // jsPsych.run(intro.concat(toy));
+    jsPsych.run(intro.concat(icecream).concat(alien_tree));
 
     function write_data_to_server(filename, filedata) {
       /*
