@@ -35,9 +35,9 @@ def convert(img, mp3, mp4):
 #     convert(str(i), diff[i], 'transition_' + str(i))
 #   else:   
 #     convert(str(i), 'transition', 'transition_' + str(i))
-# convert('18', 'done', 'done')
+convert('18', 'done', 'done')
 
-convert('7_toy_graph', '7_toy_least_why', '7_toy_least_why')
-convert('7_toy_graph', '7_toy_most_why', '7_toy_most_why')
-convert('8_ice_cream_graph', '8_ice_cream_least_why', '8_ice_cream_least_why')
-convert('8_ice_cream_graph', '8_ice_cream_most_why', '8_ice_cream_most_why')
+# convert('7_toy_graph', '7_toy_least_why', '7_toy_least_why')
+# convert('7_toy_graph', '7_toy_most_why', '7_toy_most_why')
+# convert('8_ice_cream_graph', '8_ice_cream_least_why', '8_ice_cream_least_why')
+# convert('8_ice_cream_graph', '8_ice_cream_most_why', '8_ice_cream_most_why')
