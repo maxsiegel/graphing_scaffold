@@ -146,6 +146,11 @@ var jsPsychGraphScaffold = (function (jspsych) {
       button_label: {
         type: jspsych.ParameterType.STRING,
         default: "Continue"
+      },
+      /** Image for the next button */
+      button_img: {
+        type: jspsych.ParameterType.STRING,
+        default: void 0
       }
     },
     data: {
@@ -246,7 +251,10 @@ var jsPsychGraphScaffold = (function (jspsych) {
       if (trial.prompt !== null) {
         html += trial.prompt;
       }
-      html += '<button class="jspsych-btn" id="jspsych-resize-btn">' + trial.button_label + "</button>";
+      console.log(trial.button_img);
+      const button_content = (trial.button_img)? `<img src="${trial.button_img}" height="50px"/>` : trial.button_label;
+      html += '<button class="jspsych-btn" id="jspsych-resize-btn">' + button_content + "</button>";
+      
       display_element.innerHTML = html;
 
       const round = (y) => {
