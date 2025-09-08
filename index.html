@@ -56,6 +56,18 @@
       });
     }
 
+    const warning = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: "<h1>This study requires a larger screen size. Please log in on another device.</h1>",
+      choices: ['next'],
+      button_html: (c, ci) => "<button hidden />",
+    }
+    if (window.innerHeight < 650 || window.innerWidth < 900) {
+      jsPsych.run([warning]);
+      throw new Error("window is not large enough");
+    }
+    
+
     // STIMULI ====================================================================
     const preload = {
       type: jsPsychPreload,
@@ -66,14 +78,13 @@
       {
         type: jsPsychHtmlButtonResponse,
         stimulus: "<h1>Fun with Graphing!</h1>",
-        choices: ['next'],
+        choices: ['NEXT'],
         button_html: next_button,
       },
       {
         type: jsPsychVideoButtonResponse,
         stimulus: [BASEDIR + "mp4/0_intro.mp4"],
         height: 400,
-        trial_ends_after_video: true,
         choices: ["NEXT"],
         button_html: next_button,
       }
@@ -84,7 +95,6 @@
         type: jsPsychVideoButtonResponse,
         stimulus: [BASEDIR + "mp4/1_tutorial_tree.mp4"],
         height: 400,
-        trial_ends_after_video: true,
         choices: ["NEXT"],
         button_html: next_button,
       },
@@ -97,6 +107,7 @@
         prompt: "<p>Match the height of the tree!</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "grow",
       },
     ];
@@ -124,6 +135,7 @@
         prompt: "<p>How tall is the tree on day 5?</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "grow",
       }
     ];
@@ -152,6 +164,7 @@
         prompt: "<p>Match the height of the tree!</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "rise",
         dynamic_height: 300,
       },
@@ -173,6 +186,7 @@
         prompt: "<p>How tall is the tree on day 5?</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "rise",
         dynamic_height: 300,
       }
@@ -202,6 +216,7 @@
         prompt: "<p>Match the height of the tree!</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "click",
         initial_height: 0,
       },
@@ -223,6 +238,7 @@
         prompt: "<p>How tall is the tree on day 5?</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "click",
         initial_height: 0,
       }
@@ -253,6 +269,7 @@
         prompt: "<p>How tall is the tree on day 5?</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "grow",
         initial_height: 280
       }
@@ -274,6 +291,7 @@
         prompt: "<p>Match the height of the tree!</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "click",
         initial_height: 0,
       }
@@ -294,6 +312,7 @@
         audio: BASEDIR + "mp3/tree_day_5.mp3",
         prompt: "<p>How tall is the tree on day 5?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
@@ -315,6 +334,7 @@
         audio: BASEDIR + "mp3/5_alien2_dot_graph.mp3",
         prompt: "<p>How tall is the tree on day 11?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
@@ -344,6 +364,7 @@
         audio: BASEDIR + "mp3/6_fruits_match.mp3",
         prompt: "<p>Match the number of fruits!</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "rise",
         input_steps: 6,
@@ -366,6 +387,7 @@
         audio: BASEDIR + "mp3/6_fruits_day_4.mp3",
         prompt: "<p>How many fruits were picked on day 4?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "rise",
         input_steps: 6,
@@ -380,6 +402,7 @@
         audio: BASEDIR + "mp3/6_fruits_day_5.mp3",
         prompt: "<p>How many fruits were picked on day 5?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "rise",
         input_steps: 6,
@@ -402,6 +425,7 @@
         audio: BASEDIR + "mp3/6_fruits_match.mp3",
         prompt: "<p>Match the number of fruits!</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
@@ -423,6 +447,7 @@
         audio: BASEDIR + "mp3/6_fruits_day_4.mp3",
         prompt: "<p>How many fruits were picked on day 4?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
@@ -436,6 +461,7 @@
         audio: BASEDIR + "mp3/6_fruits_day_5.mp3",
         prompt: "<p>How many fruits were picked on day 5?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
