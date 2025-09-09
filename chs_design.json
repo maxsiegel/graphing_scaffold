@@ -1,61 +1,32 @@
 {
   "frames": {
+    "tablet-warning": {
+      "blocks": [
+        {
+          "emph": true,
+          "text": "Many parts of this study are designed to only respond to touchscreen input (not mouse clicks), The study enforces a minimum screen size so it is not compatible with phones. If you're currently signed in on a computer or a phone, please sign in to CHS on a tablet device and continue from there instead.",
+          "title": "This study only works on tablets!"
+        }
+      ],
+      "showPreviousButton": false,
+      "kind": "exp-lookit-text"
+    },
     "video-config": {
       "kind": "exp-video-config",
-      "troubleshootingIntro": "If you're having any trouble getting your webcam set up, please feel free to email Vivian Han at vivhan@mit.edu and we'd be glad to help you out!"
+      "troubleshootingIntro": "If you're having any trouble getting your webcam set up, please feel free to email Nicole Coates at nhcoates@mit.edu and we'd be glad to help you out!"
     },
     "video-consent": {
       "kind": "exp-lookit-video-consent",
       "template": "consent_005",
       "PIName": "Laura Schulz",
       "institution": "Massachusetts Institute of Technology",
-      "PIContact": "the ECCL lab at vivhan@mit.edu",
-      "purpose": "TODO",
-      "procedures": "TODO",
+      "PIContact": "the ECCL lab at nhcoates@mit.edu",
+      "purpose": "Young children rarely get introduced to sets (beyond counting their elements), functions, or data visualization, and when young children are introduced to graphical representations at all, they are usually asked to report information explicitly encoded in the graph (e.g., 'Which child sold the most cookies?') rather than to find relationships in the data or extrapolate beyond the data. Here, we are interested if young children can extrapolate beyond the data by guessing what the data might look like next and if children can make predictions about why the data in the graph looks the way it does.",
+      "procedures": "After seeing instructions on Children Helping Science, your child will complete questions about graphs by using their finger to make predictions about how the graph will look next or by verbally responding to questions.",
       "risk_statement": "There are no expected risks if you participate in the study.",
       "payment": "After you finish the study, we will email you a $5 Amazon gift card (via a code that can be entered online) within five days to thank you for your time. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.",
       "include_databrary": true,
       "research_rights_statement": "You are not waiving any legal claims, rights or remedies because of your participation in this research study.  If you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Committee On the Use of Humans as Experimental Subjects (COUHES), Massachusetts of Technology, 77 Massachusetts Avenue Cambridge, MA 02139 (contact: couhes@mit.edu)"
-    },
-    "video-quality": {
-      "kind": "exp-video-config-quality",
-      "title": "Webcam setup for the study",
-      "introText": "Please check each of the following to ensure we're able to use your video:",
-      "requireItemConfirmation": true,
-      "completedItemText": "Did it!",
-      "instructionBlocks": [
-        {
-          "text": "<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to tell whether your child is pointing to the left or right!",
-          "image": {
-            "src": "https://s3.amazonaws.com/lookitcontents/website/centering.png",
-            "alt": "Example images of using centered external webcam on monitor or built-in webcam on laptop."
-          }
-        },
-        {
-          "text": "<strong>Turn off any other monitors</strong> connected to your computer, besides the one with the centered webcam. (If there's just one monitor, you're all set!)",
-          "image": {
-            "src": "https://s3.amazonaws.com/lookitcontents/website/monitors.png",
-            "alt": "Example images showing laptop screen turned off if using external monitor and webcam, or external monitor turned off if using built-in webcam and laptop screen."
-          }
-        },
-        {
-          "text": "Check the lighting by making sure you can <strong>clearly see your own eyes</strong> on the webcam view to the right. You may need to either turn on a light or reduce light coming from behind you.",
-          "image": {
-            "src": "https://s3.amazonaws.com/lookitcontents/website/lighting.png",
-            "alt": "Example images showing good lighting, room too dark, and backlit scene where eyes are not visible."
-          }
-        },
-        {
-          "text": "If it's practical, <strong>minimize exciting things</strong> that are visible behind or to the side of the screen--for instance, by facing a wall instead of the kitchen. (If this isn't practical for you, don't worry about it--just check the box!)",
-          "image": {
-            "src": "https://s3.amazonaws.com/lookitcontents/website/distractions.png",
-            "alt": "Example images showing a child and puppy next to the computer, versus a computer just on its own."
-          }
-        }
-      ],
-      "requireTestVideo": false,
-      "showRecordMenu": false,
-      "recordingInstructionText": "You should be able to see your camera view above."
     },
     "instructions": {
       "kind": "exp-lookit-instructions",
@@ -97,15 +68,14 @@
       ],
       "nextButtonText": "Next"
     },
-    "embedded-survey": {
-      "kind": "exp-lookit-iframe",
-      "iframeSrc": "https://vivianhan404.github.io/graphing_scaffold/",
-      "iframeHeight": "500px",
-      "iframeWidth": "100%",
-      "instructionText": "Please complete the survey above. When finished, click the green 'Next' button to continue with the experiment.",
-      "optionalExternalLink": true
+    "start-recording": {
+      "kind": "exp-lookit-start-recording",
+      "baseDir": "https://vivhan.scripts.mit.edu/graphing_scaffold/img",
+      "image": "0_intro.png",
+      "imageAnimation": "bounce",
+      "displayFullscreen": true
     },
-    "embedded-survey-with-id": {
+    "embedded-survey": {
       "kind": "exp-lookit-iframe",
       "iframeHeight": "600px",
       "iframeWidth": "100%",
@@ -113,32 +83,38 @@
       "optionalExternalLink": true,
       "generateProperties": "function(expData, sequence, child, pastSessions, conditions) { return { 'iframeSrc': `https://vivhan.scripts.mit.edu/graphing_scaffold/?c=${child.get('id')}&r=${pastSessions.filter((session)=>session.get('completedConsentFrame')).length}` }; }"
     },
+    "stop-recording": {
+      "kind": "exp-lookit-stop-recording",
+      "baseDir": "https://vivhan.scripts.mit.edu/graphing_scaffold/img",
+      "image": "0_intro.png",
+      "imageAnimation": "bounce",
+      "displayFullscreen": true
+    },
     "exit-survey": {
       "kind": "exp-lookit-exit-survey",
       "debriefing": {
         "blocks": [
           {
-            "text": "Thank you for participating in this study! TODO"
+            "text": "Thank you for participating in this study!"
           },
           {
-            "text": "Thank you again for participating in this study. Developmental research would be impossible without parental support. Please note that you have the right to withdraw your data from the study if you wish. We'll be emailing you a $5 Amazon gift card. This should arrive in your inbox within the next week after we confirm that a child is with you in the video recording and check that your child is in the age range for this study. If you don't hear from us by then, feel free to reach out! Please don't hesitate to contact us at vivhan@mit.edu if you have any additional questions or feedback!"
+            "text": "Thank you again for participating in this study. Developmental research would be impossible without parental support. Please note that you have the right to withdraw your data from the study if you wish. We'll be emailing you a $5 Amazon gift card. This should arrive in your inbox within the next week after we confirm that a child is with you in the video recording and check that your child is in the age range for this study. If you don't hear from us by then, feel free to reach out! Please don't hesitate to contact us at nhcoates@mit.edu if you have any additional questions or feedback!"
           }
         ]
       },
       "showDatabraryOptions": false,
       "includeWithdrawalExample": true,
-      "privateLevelOnly": true
+      "privateLevelOnly": false
     }
   },
-  "final_sequence": [
+  "sequence": [
+    "tablet-warning",
     "video-config",
-    "video-quality",
     "video-consent",
     "instructions",
+    "start-recording",
     "embedded-survey",
+    "stop-recording",
     "exit-survey"
-  ],
-  "sequence": [
-    "embedded-survey-with-id"
   ]
 }

@@ -115,6 +115,11 @@ var jsPsychGraphScaffold = (function (jspsych) {
         type: jspsych.ParameterType.INT,
         default: 100
       },
+      /** Whether to allow mouse click events. Set true for debug purposes. */
+      allow_click: {
+        type: jspsych.ParameterType.BOOL,
+        default: false
+      },
       /** Path to audio file to be played. */
 	    audio: {
 	      type: jspsych.ParameterType.AUDIO,
@@ -146,6 +151,11 @@ var jsPsychGraphScaffold = (function (jspsych) {
       button_label: {
         type: jspsych.ParameterType.STRING,
         default: "Continue"
+      },
+      /** Image for the next button */
+      button_img: {
+        type: jspsych.ParameterType.STRING,
+        default: void 0
       }
     },
     data: {
@@ -246,7 +256,9 @@ var jsPsychGraphScaffold = (function (jspsych) {
       if (trial.prompt !== null) {
         html += trial.prompt;
       }
-      html += '<button class="jspsych-btn" id="jspsych-resize-btn">' + trial.button_label + "</button>";
+      const button_content = (trial.button_img)? `<img src="${trial.button_img}" height="50px"/>` : trial.button_label;
+      html += '<button class="jspsych-btn" id="jspsych-resize-btn">' + button_content + "</button>";
+      
       display_element.innerHTML = html;
 
       const round = (y) => {
@@ -337,12 +349,15 @@ var jsPsychGraphScaffold = (function (jspsych) {
 	    }
       this.audio.play();
 
-      display_element.querySelector("#input-space").addEventListener("mousedown", mousedownevent);
       display_element.querySelector("#input-space").addEventListener("touchstart", mousedownevent);
-      document.addEventListener("mouseup", mouseupevent);
       document.addEventListener("touchend", mouseupevent);
-      document.addEventListener("mousemove", resizeevent);
       document.addEventListener("touchmove", resizeevent);
+
+      if (trial.allow_click) {
+        display_element.querySelector("#input-space").addEventListener("mousedown", mousedownevent);
+        document.addEventListener("mouseup", mouseupevent);
+        document.addEventListener("mousemove", resizeevent);
+      }
 
       const end_trial = () => {
         this.audio.stop();

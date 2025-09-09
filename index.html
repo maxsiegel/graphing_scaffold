@@ -4,6 +4,7 @@
     <title>My experiment</title>
     <script src="html2canvas.js"></script>
     <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-preload.js"></script>
     <script src="jspsych/plugin-html-button-response.js"></script>
     <script src="jspsych/plugin-image-button-response.js"></script>
     <script src="jspsych/plugin-audio-button-response.js"></script>
@@ -21,6 +22,9 @@
     const jsPsych = initJsPsych();
     const debug = true;
     const BASEDIR = "https://maxs.scripts.mit.edu/graphing_scaffold/";
+
+    const next_button = (choice, choice_index) => 
+      `<button class="jspsych-btn"><img src="${BASEDIR + "img/next.png"}" height="50px"/></button>`
 
     const make_clickable_columns = (choice, choice_index) => {
       const dimensions = `height: 310px; width: 165px;`;
@@ -52,217 +56,226 @@
       });
     }
 
+    const warning = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: "<h1>This study requires a larger screen size. Please log in on another device.</h1>",
+      choices: ['next'],
+      button_html: (c, ci) => "<button hidden />",
+    }
+    if (window.innerHeight < 650 || window.innerWidth < 900) {
+      jsPsych.run([warning]);
+      throw new Error("window is not large enough");
+    }
+    
+
     // STIMULI ====================================================================
+    const preload = {
+      type: jsPsychPreload,
+      auto_preload: true
+    };
+    
     const intro = [
       {
         type: jsPsychHtmlButtonResponse,
-        stimulus: "<h1>Let's observe some trees!</h1>",
-        choices: ['next'],
-        prompt: "<p>Placeholder intro slide</p>"
+        stimulus: "<h1>Fun with Graphing!</h1>",
+        choices: ['NEXT'],
+        button_html: next_button,
       },
       {
         type: jsPsychVideoButtonResponse,
         stimulus: [BASEDIR + "mp4/0_intro.mp4"],
         height: 400,
-        trial_ends_after_video: true,
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
+      }
+    ];
+
+    const tutorial_tree = [
+      {
+        type: jsPsychVideoButtonResponse,
+        stimulus: [BASEDIR + "mp4/1_tutorial_tree.mp4"],
+        height: 400,
+        choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       }
     ];
 
     const regular_tree_match = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/1_tutorial_tree.mp4"],
-        height: 400,
-        trial_ends_after_video: true,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/1_regular_tree_match.png",
         dynamic_image: BASEDIR + "img/1_regular_tree_single.png",
         audio: BASEDIR + "mp3/tree_match.mp3",
         prompt: "<p>Match the height of the tree!</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "grow",
-      },
+      }
     ];
+
     const regular_tree_graph = [
-      {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_1.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
       {
         type: jsPsychVideoButtonResponse,
         stimulus: [BASEDIR + "mp4/1_regular_tree_graph_demo.mp4"],
         height: 400,
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       },
       {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/1_regular_tree_graph.png",
         dynamic_image: BASEDIR + "img/1_regular_tree_single.png",
         audio: BASEDIR + "mp3/1_regular_tree_graph.mp3",
         prompt: "<p>How tall is the tree on day 5?</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "grow",
-      }
-    ];
-    const regular_bar_match = [
-      {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_2.mp4"],
-        height: 400,
-        choices: ["NEXT"],
       },
+    ];
+
+    const tutorial_bar = [
       {
         type: jsPsychVideoButtonResponse,
         stimulus: [BASEDIR + "mp4/2_tutorial_bar.mp4"],
         height: 400,
         trial_ends_after_video: true,
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       },
+    ];
+
+    const regular_bar_match = [
       {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/2_regular_bar_match.png",
         dynamic_image: BASEDIR + "img/2_regular_bar_single.png",
         audio: BASEDIR + "mp3/2_regular_bar_match.mp3",
         prompt: "<p>Match the height of the tree!</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "rise",
         dynamic_height: 300,
-      },
-    ];
+      }
+    ]
+
     const regular_bar_graph = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_3.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/2_regular_bar_graph.png",
         dynamic_image: BASEDIR + "img/2_regular_bar_single.png",
         audio: BASEDIR + "mp3/2_regular_bar_graph.mp3",
         prompt: "<p>How tall is the tree on day 5?</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "rise",
         dynamic_height: 300,
       }
     ];
-    const regular_dot_match = [
+
+    const tutorial_dot = [
       {
         type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_4.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/3_tutorial_dot.mp4"], // TODO redo
+        stimulus: [BASEDIR + "mp4/3_tutorial_dot.mp4"],
         height: 400,
         trial_ends_after_video: true,
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       },
+    ];
+
+    const regular_dot_match = [
       {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/3_regular_dot_match.png",
-        dynamic_image: BASEDIR + "img/regular_dot_single.png",
+        dynamic_image: BASEDIR + "img/3_regular_dot_single.png",
         audio: BASEDIR + "mp3/3_regular_dot_match.mp3",
         prompt: "<p>Match the height of the tree!</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "click",
         initial_height: 0,
-      },
+      }
     ];
+
     const regular_dot_graph = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_5.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/3_regular_dot_graph.png",
         dynamic_image: BASEDIR + "img/3_regular_dot_single.png",
         audio: BASEDIR + "mp3/3_regular_dot_graph.mp3",
         prompt: "<p>How tall is the tree on day 5?</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "click",
         initial_height: 0,
       }
     ];
     const regular = [
-      regular_tree_match,
+      tutorial_tree.concat(regular_tree_match),
       regular_tree_graph,
-      regular_bar_match,
+      tutorial_bar.concat(regular_bar_match),
       regular_bar_graph,
-      regular_dot_match,
+      tutorial_dot.concat(regular_dot_match),
       regular_dot_graph
     ];
     
     const alien_tree = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_6.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/4_alien_tree_graph.png",
         dynamic_image: BASEDIR + "img/4_alien_tree_single.png",
         audio: BASEDIR + "mp3/tree_day_5.mp3",
         prompt: "<p>How tall is the tree on day 5?</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "grow",
         initial_height: 280
       }
     ];
     const alien_dots_match = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_7.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/4_alien_dot_match.png",
         dynamic_image: BASEDIR + "img/4_alien_dot_single.png",
         audio: BASEDIR + "mp3/4_alien_dot_match.mp3",
         prompt: "<p>Match the height of the tree!</p>",
         input_required: !debug,
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_type: "click",
         initial_height: 0,
       }
     ];
     const alien_dots_graph = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_8.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/4_alien_dot_graph.png",
         dynamic_image: BASEDIR + "img/4_alien_dot_single.png",
         audio: BASEDIR + "mp3/tree_day_5.mp3",
         prompt: "<p>How tall is the tree on day 5?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
@@ -270,18 +283,14 @@
     ];
     const alien_2 = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_9.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/5_alien2_dot_graph.png",
         dynamic_image: BASEDIR + "img/5_alien2_dot_single.png",
         audio: BASEDIR + "mp3/5_alien2_dot_graph.mp3",
         prompt: "<p>How tall is the tree on day 11?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
@@ -297,18 +306,14 @@
     
     const fruit_bar_match = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_10.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/6_fruits_bar_match.png",
         dynamic_image: BASEDIR + "img/6_fruits_bar_single.png",
         audio: BASEDIR + "mp3/6_fruits_match.mp3",
         prompt: "<p>Match the number of fruits!</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "rise",
         input_steps: 6,
@@ -317,18 +322,14 @@
     ];
     const fruit_bar_graph = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_11.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/6_fruits_bar_graph_1.png",
         dynamic_image: BASEDIR + "img/6_fruits_bar_single.png",
         audio: BASEDIR + "mp3/6_fruits_day_4.mp3",
         prompt: "<p>How many fruits were picked on day 4?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "rise",
         input_steps: 6,
@@ -337,11 +338,13 @@
       },
       {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/6_fruits_bar_graph_2.png",
         dynamic_image: BASEDIR + "img/6_fruits_bar_single.png",
         audio: BASEDIR + "mp3/6_fruits_day_5.mp3",
         prompt: "<p>How many fruits were picked on day 5?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "rise",
         input_steps: 6,
@@ -350,18 +353,14 @@
     ];
     const fruit_dot_match = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_12.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/6_fruits_dot_match.png",
         dynamic_image: BASEDIR + "img/6_fruits_dot_single.png",
         audio: BASEDIR + "mp3/6_fruits_match.mp3",
         prompt: "<p>Match the number of fruits!</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
@@ -369,18 +368,14 @@
     ];
     const fruit_dot_graph = [
       {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_13.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/6_fruits_dot_graph_1.png",
         dynamic_image: BASEDIR + "img/6_fruits_dot_single.png",
         audio: BASEDIR + "mp3/6_fruits_day_4.mp3",
         prompt: "<p>How many fruits were picked on day 4?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
@@ -388,11 +383,13 @@
       },
       {
         type: jsPsychGraphScaffold,
+        button_img: BASEDIR + "img/next.png",
         static_image: BASEDIR + "img/6_fruits_dot_graph_2.png",
         dynamic_image: BASEDIR + "img/6_fruits_dot_single.png",
         audio: BASEDIR + "mp3/6_fruits_day_5.mp3",
         prompt: "<p>How many fruits were picked on day 5?</p>",
         response_allowed_while_playing: debug,
+        allow_click: debug,
         input_required: !debug,
         input_type: "click",
         initial_height: 0,
@@ -408,15 +405,11 @@
     const toy_intro = [
       {
         type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_14.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
-        type: jsPsychVideoButtonResponse,
         stimulus: [BASEDIR + "mp4/7_toy_intro.mp4"],
         height: 400,
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       }
     ];
     const toy_least = [
@@ -437,15 +430,11 @@
         height: 400,
         prompt: 'Why do you think the least number of toys sold that month?',
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       }
     ];
     const toy_most = [
-      {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_15.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
       {
         type: jsPsychAudioButtonResponse,
         stimulus: BASEDIR + "mp3/7_toy_most_click.mp3",
@@ -463,23 +452,21 @@
         height: 400,
         prompt: 'Why do you think the most number of toys sold that month?',
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       }
     ];
-    const toy = [toy_intro, toy_least, toy_most];
+    const toy = [toy_intro.concat(toy_least), toy_most];
 
 
     const ice_cream_intro = [
       {
         type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_16.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
-      {
-        type: jsPsychVideoButtonResponse,
         stimulus: [BASEDIR + "mp4/8_ice_cream_intro.mp4"],
         height: 400,
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       }
     ];
     const ice_cream_least = [
@@ -500,15 +487,11 @@
         height: 400,
         prompt: 'Why do you think the least amount of ice cream sold that month?',
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       }
     ];
     const ice_cream_most = [
-      {
-        type: jsPsychVideoButtonResponse,
-        stimulus: [BASEDIR + "mp4/transition_17.mp4"],
-        height: 400,
-        choices: ["NEXT"],
-      },
       {
         type: jsPsychAudioButtonResponse,
         stimulus: BASEDIR + "mp3/8_ice_cream_most_click.mp3",
@@ -526,9 +509,11 @@
         height: 400,
         prompt: 'Why do you think the most amount of ice cream sold that month?',
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
       }
     ];
-    const ice_cream = [ice_cream_intro, ice_cream_least, ice_cream_most];
+    const ice_cream = [ice_cream_intro.concat(ice_cream_least), ice_cream_most];
 
     const outro = [
       {
@@ -536,21 +521,50 @@
         stimulus: [BASEDIR + "mp4/done.mp4"],
         height: 400,
         choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
         on_start: function() {
           write_data_to_server(FILE_NAME, jsPsych.data.get().json());       
         }
       },
+      {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: "<h1>Press the green button under this window to complete the study.</h1>",
+        choices: ['next'],
+        button_html: (choice, choice_index) => '<button hidden />'
+      }
     ];
 
-    const all_trials = [
-      intro,
+    const content = [
       regular,
       alien,
       fruit,
       toy, 
-      ice_cream,
-      outro,
-    ];
+      ice_cream
+    ].flat();
+    console.log("content len", content.length);
+
+    const transition = [];
+    for (let i = 1; i < 18; i++) {
+      const t = {
+        type: jsPsychVideoButtonResponse,
+        stimulus: [BASEDIR + `mp4/transition_${i}.mp4`],
+        height: 400,
+        choices: ["NEXT"],
+        button_html: next_button,
+        response_allowed_while_playing: debug,
+      };
+      transition.push(t);
+    }
+
+    const all_trials = [preload, intro];
+    for (let i = 0; i < 17; i++) {
+      all_trials.push(content[i]);
+      all_trials.push(transition[i]);
+    }
+    all_trials.push(content[17]);
+    all_trials.push(outro);
+
     const trials = all_trials.flat();
     jsPsych.run(trials);
     // jsPsych.run(intro.concat(toy));
