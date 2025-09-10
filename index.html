@@ -56,16 +56,16 @@
       });
     }
 
-    const warning = {
-      type: jsPsychHtmlButtonResponse,
-      stimulus: "<h1>This study requires a larger screen size. Please log in on another device.</h1>",
-      choices: ['next'],
-      button_html: (c, ci) => "<button hidden />",
-    }
-    if (window.innerHeight < 650 || window.innerWidth < 900) {
-      jsPsych.run([warning]);
-      throw new Error("window is not large enough");
-    }
+   /* const warning = {
+    *   type: jsPsychHtmlButtonResponse,
+    *   stimulus: "<h1>This study requires a larger screen size. Please log in on another device.</h1>",
+    *   choices: ['next'],
+    *   button_html: (c, ci) => "<button hidden />",
+    * } */
+   /* if (window.innerHeight < 650 || window.innerWidth < 900) {
+    *   jsPsych.run([warning]);
+    *   throw new Error("window is not large enough");
+    * } */
     
 
     // STIMULI ====================================================================
